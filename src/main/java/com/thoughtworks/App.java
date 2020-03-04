@@ -67,6 +67,7 @@ public class App {
     for (String s : set) {
       list.add(s);
     }
+    Collections.sort(list);
     return list;
   }
 
@@ -74,20 +75,28 @@ public class App {
     Stream<Transaction> stream1 = transactions.stream();
     Stream<Transaction> stream2 = stream1.filter(transaction -> transaction.getTrader().getCity().equals("Cambridge"));
     List<Trader> list = new ArrayList<>();
-    stream2.forEach(transaction -> list.add(transaction.getTrader()));
-    /*Collections.sort(list, new Comparator<Trader>() {
+    Set<Trader> set = new HashSet<>();
+    stream2.forEach(transaction -> set.add(transaction.getTrader()));
+    for (Trader t : set) {
+      list.add(t);
+    }
+    Collections.sort(list, new Comparator<Trader>() {
       @Override
       public int compare(Trader o1, Trader o2) {
-        return Integer.valueOf(o1.getName()) - Integer.valueOf(o2.getName());
+        return o1.getName().compareTo(o2.getName());
       }
-    });*/
+    });
     return list;
   }
 
   public static List<String> getTradersName(List<Transaction> transactions) {
     Stream<Transaction> stream1 = transactions.stream();
     List<String> list = new ArrayList<>();
-    stream1.forEach(transaction -> list.add(transaction.getTrader().getName()));
+    Set<String> set = new HashSet<>();
+    stream1.forEach(transaction -> set.add(transaction.getTrader().getName()));
+    for (String s : set) {
+      list.add(s);
+    }
     Collections.sort(list);
     return list;
   }
